@@ -1,0 +1,318 @@
+<html>
+  <head>
+    
+    <meta charset="utf-8">       
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="css/datepicker.min.css" rel="stylesheet" />
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.35/dist/web3.min.js" ></script>
+    
+    <script id="configJs" src="js/config.js?v1.0.0" defer></script>     
+  </head>
+
+  <body>
+
+    <!-- INICIO ACCESOS ADMIN, PROMOTOR, INVERSOR-->
+    <div id="accesosDiv" >
+    <div class="container p-1 my-1 border text-center">
+        <h2>HOUSE FUNDING</h2>
+        <p>Invierte en proyectos de promotores inmobiliarios con tokens en Alastria.</p>
+      </div>      
+      <div  class="container p-1 my-1 bg-dark text-white">
+        <div class="row">
+          <div class="col text-center"><h1>Acceso para promotores</h1></div>
+          <div class="col text-center"><h1>Acceso para inversores</h1></div>  
+        </div>
+        <div class="row">
+        <div class="col text-center">      
+            <p>ID (account): <input type="text" id="loginPromotorT"/></p> 
+            <p>Contraseña: <input type="password" id="pssPromotor"/> </p> 
+            <p><button type="button" onclick="loginPromotor()">Login promotor</button></p> 
+            <p> ¿No tienes cuenta?</p>  
+            <p> <button type="button" id="logPromotorButton" onclick="muestra_oculta('regPromotorDiv', 'accesosDiv')">Registrar promotor</button></p>  
+        </div> 
+        <div class="col text-center">      
+            <p>ID (account): <input type="text" id="logInversor"/></p> 
+            <p>Contraseña: <input type="password" id="pssInversor"/> </p> 
+            <p><button type="button" onclick="loginInversor()">Login inversor</button></p> 
+            <p> ¿No tienes cuenta?</p>  
+            <p> <button type="button" onclick="muestra_oculta('regInversorDiv', 'accesosDiv')">Registrar inversor</button></p>  
+        </div>  
+          </div> 
+      </div>
+      
+      <div class="container p-1 my-1 bg-primary text-white">
+        <div class="row">
+          <div class="col text-center"><h1>Acceso Administrador</h1></div>  	
+        </div>
+        <div class="col text-center">      
+            <p>ID (account): <input type="text" name="logAdministrador" id="loginAdministrador"/></p> 
+            <p>Contraseña: <input type="password" id="pssAdministrador"/> </p> 
+            <p><button type="button" onclick="loginAdministrador()">Login Administrador</button></p>       
+        </div> 
+      </div>
+    </div>
+    <!-- FIN ACCESO ADMIN, PROMOTOR, INVERSOR-->
+
+    <!-- INICIO REGISTRAR PROMOTOR-->
+    <div id="regPromotorDiv" class="container" style="display: none">
+      <br>
+      <div class="row"><h3>Registrar nuevo PROMOTOR</h3></div>  
+      <br>
+      <div class="row">
+        <div class="col-sm-1"><label> Nombre: </label></div>
+        <div class="col-sm-11"><input type="text" id="nbPromotor"/></div>            	
+      </div>
+      <div class="row">
+        <div class="col-sm-1"><label> CIF: </label></div>
+        <div class="col-sm-11"><input type="text" id="cifPromotor"/></div>            	
+      </div>
+      <div class="row">
+        <div class="col-sm-1"><label> Capacidad: </label></div>
+        <div class="col-sm-11"><input type="text" id="capacidadPromotor"/></div>            	
+      </div>   
+      <div class="row">
+          <div class="col-sm-1"><label> Password: </label></div>
+          <div class="col-sm-11"><input type="text" id="passPromotor"/></div>            	
+        </div>             
+      <br>            
+      <div class="row"><p><button type="button" onclick="registrarPromotor()">Registrar promotor</button></p></div>
+      <div class="row"><p><button type="button" onclick="muestra_oculta('regPromotorDiv', 'accesosDiv');">Volver</button></p></div>        
+    </div>
+    <!-- FIN REGISTRAR PROMOTOR-->
+
+    <!-- FIN REGISTRAR INVERSOR-->
+    <div id="regInversorDiv" class="container" style="display: none">
+      <br>
+      <div class="row"><h3>Registrar nuevo INVERSOR</h3></div>  
+      <br>
+      <div class="row">
+        <div class="col-sm-1"><label> Nombre: </label></div>
+        <div class="col-sm-11"><input type="text" id="nbInversor"/></div>            	
+      </div>
+      <div class="row">
+        <div class="col-sm-1"><label> CIF: </label></div>
+        <div class="col-sm-11"><input type="text" id="cifInversor"/></div>            	
+      </div>
+      <div class="row">
+          <div class="col-sm-1"><label> Password: </label></div>
+          <div class="col-sm-11"><input type="text" id="passInversor"/></div>            	
+        </div>                  
+      <br>            
+      <div class="row"><p><button type="button" onclick="registrarInversor()">Registrar inversor</button></p></div>
+      <div class="row"><p><button type="button" onclick="muestra_oculta('regInversorDiv', 'accesosDiv');">Volver</button></p></div>      
+    </div>
+    <!-- FIN REGISTRAR INVERSOR-->
+    
+    <!-- INICIO REGISTRAR PROYECTO-->
+    <div id="regProyectoDiv" class="container" style="display: none">
+        <br>
+        <div class="row"><h3>Registrar nuevo PROYECTO</h3></div>  
+        <br>
+        <div class="row">
+      <div class="col-sm-2"><label> Nombre: </label></div>
+        <div class="col-sm-10"><input type="text" id="nbProyectoReg"/></div>            	
+        </div>
+        <div class="row">
+      <div class="col-sm-2"><label> Tokens Goal: </label></div>
+        <div class="col-sm-10"><input type="text" id="tokenGoalProyectoReg"/></div>            	
+        </div> 
+        <div class="row">
+      <div class="col-sm-2"><label> Retabilidad: </label></div>
+        <div class="col-sm-10"><input type="text" id="rentabilidadProyectoReg"/></div>            	
+        </div>
+        <div class="row">
+      <div class="col-sm-2"><label> Inicio Financ.: </label></div>
+        <div class="col-sm-10"><input type="text" name="fechaIniFinancProyectoRegDatepicker" id="fechaIniFinancProyectoReg"/></div>            	
+        </div>
+        <div class="row">
+      <div class="col-sm-2"><label> Fin Financiac.: </label></div>
+        <div class="col-sm-10"><input type="text" name="fechaFinFinancProyectoRegDatepicker" id="fechaFinFinancProyectoReg"/></div>            	
+        </div>
+        <div class="row">
+      <div class="col-sm-2"><label> Inicio Ejecución: </label></div>
+        <div class="col-sm-10"><input type="text" name="fechaIniEjeProyectoRegDatepicker" id="fechaIniEjeProyectoReg"/></div>            	
+        </div>
+        <div class="row">
+      <div class="col-sm-2"><label> Fin Ejecución: </label></div>
+        <div class="col-sm-10"><input type="text" name="fechaFinEjeProyectoRegDatepicker" id="fechaFinEjeProyectoReg"/></div>            	
+        </div>
+        <br>            
+        <div class="row"><p><button type="button" onclick="registrarProyecto()">Registrar proyecto</button></p></div>
+        <div class="row"><p><button type="button" onclick="muestra_oculta('regProyectoDiv', 'promotorDiv');cargarPantallaPromotor();">Volver</button></p></div>      
+      </div>
+      <!-- FIN REGISTRAR PROYECTO-->    
+
+    <!-- INICIO PROMOTOR-->    
+    <div id="promotorDiv" class="container" style="display: none">    
+      <br>
+      <div class="row"><h3>PROMOTOR</h3></div> 
+      <div class="row">
+        <div class="col-sm-1"><label> Nombre: </label></div>
+        <div class="col-sm-11"><span id="nbPromotorPro"></span></div>            	
+      </div>                 
+      <div class="row">
+          <div class="col-sm-1"><label> CIF: </label></div>
+          <div class="col-sm-11"><span id="cifPromotorPro"></span></div>            	
+      </div>                       
+      <div class="row">
+          <div class="col-sm-1"><label> Capacidad: </label></div>
+          <div class="col-sm-11"><span id="capacidadPromotorPro"></span></div>            	
+      </div>                    
+      <br>
+      <div class="row"><h5>PROYECTOS</h5></div>
+      <div class="row">
+        <table class="table">             
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>TokenGoal</th>
+              <th>Rentabilidad</th>
+              <th>Inicio Financiación</th>
+              <th>Fin Financiación</th>
+              <th>Inicio Ejecución</th>
+              <th>Fin Ejecución</th>
+              <th>Estado</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="listaProyectosPromotor">                 
+          </tbody>
+        </table>   
+      </div> 
+      <br>
+      <div class="row"><p><button type="button" onclick="muestra_oculta('promotorDiv', 'regProyectoDiv')">Nuevo proyecto</button></p></div>
+      <div class="row"><p><button type="button" onclick="muestra_oculta('promotorDiv', 'accesosDiv');">Volver</button></p></div>            
+    </div>
+   
+    <!-- FIN PROMOTOR-->
+
+    <!-- INICIO INVERSOR-->
+    <div id="inversorDiv" class="container" style="display: none">         	 
+      <br>
+      <div class="row"><h3>INVERSOR</h3></div>   
+      <div class="row">
+      <div class="col-sm-1"><label> Nombre: </label></div>
+        <div class="col-sm-11"><span id="nbInversorInv"></span></div>            	
+        </div>      
+      <div class="row">
+      <div class="col-sm-1"><label> CIF: </label></div>
+        <div class="col-sm-11"> <span id="cifInversorInv"></span></div>            	
+        </div>             
+        <br>
+        <div class="row"><h5>PROYECTOS</h5></div>
+        <div class="row">
+          <table class="table">             
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>TokenGoal</th>
+                <th>Rentabilidad</th>
+                <th>Token invertidos</th> 
+                <th>Inicio Financiación</th>
+                <th>Fin Financiación</th>
+                <th>Inicio Ejecución</th>
+                <th>Fin Ejecución</th>                             
+                <th>Estado</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="listaProyectosDelInversor">                 
+            </tbody>
+          </table>   
+        </div> 
+        <br>
+        <div class="row"><p><button type="button" onclick="cargarPantallaInvertirEnProyectos();muestra_oculta('inversorDiv', 'invertirEnProyectoDiv');cleanInversor();">Invertir en nuevo proyecto</button></p></div>
+        <div class="row"><p><button type="button" onclick="muestra_oculta('inversorDiv', 'accesosDiv');cleanInversor();">Volver</button></p></div>            
+     </div>
+    <!-- FIN INVERSOR-->    
+
+    <!-- INICIO INVERTIR EN PROYECTO-->
+    
+    <div id="invertirEnProyectoDiv" class="container" style="display: none">             
+    </div>
+    
+    <!-- FIN INVERTIR EN PROYECTO-->       
+    
+    <!-- INICIO ADMINISTRADOR -->
+    <div id="administradorDiv" class="container" style="display: none">
+        <br>
+        <div class="row">        
+          <div class="col text-center">
+            <h3>ADMINISTRACION DE LA PLATAFORMA</h3>
+          </div> 
+        </div> 
+        <br>
+        <div class="row"><h4>Transferencia Tokens</h4></div>  
+        <div class="row">
+          <div class="col-sm-2"><label> Tipo: </label></div>
+          <div class="col-sm-10">
+            <select name="selectTipoUsuario" id="selectTipoUsuario">
+               <option value="PROMOTOR">Promotor</option>
+               <option value="INVERSOR">Inversor</option>
+              </select>
+           </div>            	
+        </div>
+        <div class="row">
+          <div class="col-sm-2"><label> Cuenta destino: </label></div>
+          <div class="col-sm-10"><input type="text" name="cuentaDestino" id="cuentaDestino" size="50" maxlength="42" value="" /></span></div>            	
+        </div>
+        <div class="row">
+          <div class="col-sm-2"><label> Tokens: </label></div>
+          <div class="col-sm-10">
+            <input type="number" min="1" name="numeroTokens" id="numeroTokens" size="30" maxlength="10" value=""/>
+             <input type="button" name="tranferirTokensBtn" value="Tranferir" onclick="tranferirTokens()"/>
+              <button type="button" onclick="muestra_oculta('administradorDiv', 'accesosDiv');cleanAdministracionPlataforma();">Volver</button>
+          </div>            	
+        </div>
+        <div class="row"><span id="msgAdministradorPlataforma"></span></div> 
+        <div class="row"><h4>Lista de Promotores</h4></div>
+        <div id="listadoAdm"></div>
+
+    </div>    
+    <!-- FIN ADMINISTRADOR -->
+
+    <div id="mensajesDiv" class="container p-1 my-1 border text-center" style="display: none">
+        <div class="row">        
+            <div class="col"></div>
+            <div class="col">
+                <p id="mensajeSpan"></p>
+            </div> 
+            <div class="col"></div>
+          </div>       
+    </div>
+
+    <script src="js/datepicker-full.min.js"></script>
+    <script>
+        
+      const elem1 = document.querySelector('input[name="fechaIniFinancProyectoRegDatepicker"]');  
+      const datepicker1 = new Datepicker(elem1, {
+        buttonClass: 'btn',        
+      });      
+
+      const elem2 = document.querySelector('input[name="fechaFinFinancProyectoRegDatepicker"]');
+      const datepicker2 = new Datepicker(elem2, {
+        buttonClass: 'btn',        
+      }); 
+
+      const elem3 = document.querySelector('input[name="fechaIniEjeProyectoRegDatepicker"]');
+      const datepicker3 = new Datepicker(elem3, {
+        buttonClass: 'btn',        
+      }); 
+
+      const elem4 = document.querySelector('input[name="fechaFinEjeProyectoRegDatepicker"]');
+      const datepicker4 = new Datepicker(elem4, {
+        buttonClass: 'btn',        
+      }); 
+
+    </script>
+
+
+  </body>
+</html>
